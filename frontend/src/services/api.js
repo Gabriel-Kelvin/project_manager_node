@@ -1,8 +1,23 @@
 import axios from 'axios';
 
+// Determine API URL based on environment
+// For local development: use localhost:8000 (backend runs on 8000 locally)
+// For production/Docker: use REACT_APP_API_URL or VM IP
+const getApiUrl = () => {
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  // Local development - backend typically runs on port 8000
+  if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:8000';
+  }
+  // Production/Docker - use VM IP
+  return 'http://3.85.144.221:8010';
+};
+
 // Create axios instance
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8010',
+  baseURL: getApiUrl(),
   headers: {
     'Content-Type': 'application/json',
   },
