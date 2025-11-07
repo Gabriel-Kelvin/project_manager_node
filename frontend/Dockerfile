@@ -12,8 +12,10 @@ RUN npm ci
 COPY . .
 
 # Build the app
-ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=$REACT_APP_API_URL
+# Support both VITE_BACKEND_URL and REACT_APP_API_URL for compatibility
+ARG VITE_BACKEND_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
+ENV REACT_APP_API_URL=$VITE_BACKEND_URL
 RUN npm run build
 
 # Production stage
@@ -25,7 +27,7 @@ COPY --from=build /app/build /usr/share/nginx/html
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 3005
+EXPOSE 8013
 
 CMD ["nginx", "-g", "daemon off;"]
 

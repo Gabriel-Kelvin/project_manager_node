@@ -1,17 +1,27 @@
+# Root .dockerignore
 node_modules
-venv
-__pycache__
-*.pyc
-*.log
+npm-debug.log
 .env
 .env.local
 .env.*.local
+dist
+build
+.DS_Store
+*.log
+coverage
+.nyc_output
 .git
 .gitignore
-.DS_Store
+README.md
 *.md
-backend/
-logs/
+venv
+__pycache__
+*.pyc
 .vscode
 .idea
+*.swp
+*.swo
+*~
 
+# Ignore FastAPI backend (not dockerized)
+backend/

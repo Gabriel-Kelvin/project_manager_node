@@ -11,9 +11,10 @@ RUN npm ci --only=production
 # Copy source code
 COPY . .
 
-# Expose port 8010
-EXPOSE 8010
+# Expose port 8012
+EXPOSE 8012
 
 # Start the server
-CMD ["node", "--env-file=.env", "src/server.js"]
+# dotenv.config() in server.js will load .env file automatically
+CMD ["node", "src/server.js"]
 

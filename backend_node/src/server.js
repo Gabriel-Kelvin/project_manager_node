@@ -20,8 +20,10 @@ const origins = [
     'http://127.0.0.1:3005',
     'http://localhost:5173',
     'http://127.0.0.1:5173',
-    'http://3.85.144.221:3005'
-];
+    'http://localhost:8013',
+    'http://127.0.0.1:8013',
+    process.env.FRONTEND_URL || 'http://localhost:8013'
+].filter(Boolean);
 
 app.use(cors({
     origin: origins,
@@ -53,6 +55,10 @@ app.get('/health', (req, res) => {
     });
 });
 
+app.get('/healthz', (req, res) => {
+    res.json({ status: 'ok' });
+});
+
 // Error handler to mirror FastAPI HTTPException detail shape
 // When throwing errors, use: next({ status: 4xx/5xx, detail: 'message' })
 app.use((err, req, res, next) => {
@@ -63,7 +69,8 @@ app.use((err, req, res, next) => {
     res.status(500).json({ detail: 'Internal server error' });
 });
 
-const PORT = parseInt(process.env.APP_PORT || '8010', 10);
+// Default to 8012 for consistency, can be overridden via environment variable
+const PORT = parseInt(process.env.PORT || process.env.APP_PORT || '8012', 10);
 const HOST = process.env.APP_HOST || '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
