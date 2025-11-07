@@ -26,7 +26,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - VITE_BACKEND_URL=${VITE_BACKEND_URL:-http://localhost:8012}
+        # Read from frontend/.env file - VITE_BACKEND_URL or REACT_APP_API_URL
+        - VITE_BACKEND_URL=${VITE_BACKEND_URL:-http://13.212.129.11:8012}
     container_name: project-manager-frontend
     ports:
       - "8013:8013"
